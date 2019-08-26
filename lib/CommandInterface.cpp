@@ -1,4 +1,3 @@
-#include <string.h>
 #include "QueueFilter.h"
 #include "Initialize.h"
 #include "xmlParser.h"

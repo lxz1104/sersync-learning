@@ -1,16 +1,13 @@
 #include <dirent.h>
 #include <sys/stat.h>
-#include <sys/types.h>
-#include<stdio.h>
+#include <stdio.h>
 #include <deque>
-#include<sys/select.h>
-#include<sys/time.h>
-#include <stdlib.h>
-#include<string.h>
-#include<fcntl.h>
+#include <sys/select.h>
+#include <string.h>
+#include <fcntl.h>
 #include "Initialize.h"
 #include "Inotify.h"
-#include"main.h"
+#include "main.h"
 
 //最大缓冲数量
 #define MAX_BUF_SIZE 5120

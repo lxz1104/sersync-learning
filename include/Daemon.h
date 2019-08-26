@@ -1,7 +1,7 @@
-#include <stdlib.h>
+#include <cstdlib>
 #include <unistd.h>
-#include <signal.h>
-#include <assert.h>
+#include <csignal>
+#include <cassert>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/stat.h>

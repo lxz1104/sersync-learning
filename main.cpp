@@ -89,7 +89,7 @@ void ModuleInterfaceStart(string config_file_name, Interface* module)
 {
     module->XmlParse(config_file_name);
     Inotify inotify(module->m_watch);
-    while (1)
+    while (true)
     {
         inotify.GetEvents(qf);
         while (!qf->empty())

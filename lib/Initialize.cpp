@@ -1,6 +1,6 @@
 #include <vector>
-#include<iostream>
-#include<stdlib.h>
+#include <iostream>
+#include <stdlib.h>
 #include "Initialize.h"
 #include "xmlParser.h"
 #include"main.h"

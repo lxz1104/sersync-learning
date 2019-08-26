@@ -1,25 +1,16 @@
-#include <errno.h>
-#include<arpa/inet.h>
 #include <iostream>
 #include <stdio.h>
-#include <sys/types.h>
 #include <netdb.h>
 #include <cstdlib>
-#include <errno.h>
 #include <string.h>
 #include<string>
-#include <stdlib.h>
-#include <netdb.h>
-#include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <boost/regex.hpp>
 #include<fcntl.h>
 #include<sys/time.h>
-#include<sys/ioctl.h>
 #include<unistd.h>
 #include<fstream>
-#include <boost/regex.hpp>
 #include "xmlParser.h"
 #include "CdnRefreshInterface.h"
 #include "Initialize.h"

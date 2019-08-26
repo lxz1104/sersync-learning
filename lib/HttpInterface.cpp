@@ -1,7 +1,5 @@
 #include<curl/curl.h>
 #include<sstream>
-#include "QueueFilter.h"
-#include "Initialize.h"
 #include "xmlParser.h"
 #include "Inotify.h"
 #include"HttpInterface.h"
