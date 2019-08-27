@@ -1,8 +1,11 @@
-#include"QueueFilter.h"
+#include "QueueFilter.h"
 #include "Inotify.h"
-#include"main.h"
-using namespace std;
+#include "main.h"
+#include <iostream>
+
 #define MAX_SEARCH_LENGTH 10
+
+using namespace std;
 
 QueueFilter::QueueFilter( )
 {

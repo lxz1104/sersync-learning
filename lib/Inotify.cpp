@@ -1,6 +1,6 @@
 #include <dirent.h>
 #include <sys/stat.h>
-#include <stdio.h>
+#include <iostream>
 #include <deque>
 #include <sys/select.h>
 #include <string.h>
@@ -8,6 +8,9 @@
 #include "Initialize.h"
 #include "Inotify.h"
 #include "main.h"
+
+using std::cout;
+using std::endl;
 
 //最大缓冲数量
 #define MAX_BUF_SIZE 5120

@@ -332,6 +332,8 @@ void* FileSynchronize::RsyncThread(ptrQRetry qr, Event event, string ip, string 
     /*5888 is the error no permitted to  set times  but the file has been rsynced*/
     if ( res && res != 5888 ) qr->push(command);
 
+    return nullptr;
+
 } //end RsyncThread
 
 void FileSynchronize::ThreadAwaken()
@@ -481,10 +483,10 @@ bool FileSynchronize::RsyncOnce()
 	cout << "working please wait..." << endl;
     }
 
-    for ( int i = 0; i < rmtServers.size(); i++ )
+    for (auto & rmtServer : rmtServers)
     {
-	string command = "cd " + watch + " && rsync " + params + " -R " + m_delete + " ./ " + ssh + port + timeout;
-	command += m_users + rmtServers[i]->ip;
+	    string command = "cd " + watch + " && rsync " + params + " -R " + m_delete + " ./ " + ssh + port + timeout;
+	    command += m_users + rmtServer->ip;
 	if ( ssh.empty() )
 	{
 	    command += "::";
@@ -492,7 +494,7 @@ bool FileSynchronize::RsyncOnce()
 	{
 	    command += ":";
 	}
-	command += rmtServers[i]->module + m_password;
+	command += rmtServer->module + m_password;
 	command += AddExclude();
 	if ( !debug ) command += " >/dev/null 2>&1 ";
 	if ( firstflag == 0 )
@@ -501,8 +503,9 @@ bool FileSynchronize::RsyncOnce()
 	    firstflag++;
 	}
 	if ( debug ) cout << "crontab command:" << command << endl;
-	system(command.c_str());
+	    system(command.c_str());
     }
+    return false;
 }
 
 //=======================================================================
@@ -518,9 +521,9 @@ bool FileSynchronize::RsyncOnce()
 string FileSynchronize::AddExclude()
 {
     string command;
-    for ( int i = 0; i < cfilter.size(); i++ )
+    for (const auto & i : cfilter)
     {
-	command += " --exclude=" + StrEscaped(cfilter[i]);
+	    command += " --exclude=" + StrEscaped(i);
     }
     return command;
 }

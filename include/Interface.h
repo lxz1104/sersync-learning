@@ -7,8 +7,6 @@
 
 #ifndef _INTERFACE_H
 #define	_INTERFACE_H
-#include<time.h>
-#include<string.h>
 #include"Inotify.h"
 
 class Interface {

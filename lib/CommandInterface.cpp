@@ -1,7 +1,9 @@
-#include "QueueFilter.h"
-#include "Initialize.h"
 #include "xmlParser.h"
 #include "CommandInterface.h"
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 CommandInterface::CommandInterface() : m_prefix("/bin/sh"), m_ignoreError(false), m_debug(0), m_filter(false)
 {

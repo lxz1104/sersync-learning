@@ -1,30 +1,26 @@
 #include <iostream>
-#include <stdio.h>
 #include <netdb.h>
-#include <cstdlib>
-#include <string.h>
-#include<string>
 #include <netinet/in.h>
-#include <sys/socket.h>
 #include <boost/regex.hpp>
-#include<fcntl.h>
-#include<sys/time.h>
-#include<unistd.h>
-#include<fstream>
+#include <fcntl.h>
 #include "xmlParser.h"
 #include "CdnRefreshInterface.h"
 #include "Initialize.h"
-#include"main.h"
+#include "main.h"
 
 #define MAXDATASIZE    4096 /*the maximum number of every transfer*/
 
+using std::cout;
+using std::endl;
+
 CdnRefreshInterface::CdnRefreshInterface()
 {
-	//设定超时重传时间
-	timeout.tv_sec = 0;
-	timeout.tv_usec = 300000;
+	//设定超时重传时间(ms)
+	this->timeout.tv_sec = 0;
+    this->timeout.tv_usec = 300000;
 }
 
+/** 解析配置文件 */
 void CdnRefreshInterface::XmlParse(std::string config_file_name)
 {
 	XMLNode xMainNode = XMLNode::openFileHelper( config_file_name.c_str( ), "head" );
@@ -32,7 +28,7 @@ void CdnRefreshInterface::XmlParse(std::string config_file_name)
 	if (num == 0)
 	{
 		perror( "错误，配置文件中没有插件标签\n" );
-		exit( 1 );
+		exit( EXIT_FAILURE );
 	}
 	for (int i = 0; i < num; i++)
 	{
@@ -47,7 +43,7 @@ void CdnRefreshInterface::XmlParse(std::string config_file_name)
 		if (wtchnum == 0)
 		{
 			perror( "错误，配置文件中没有指明需要监控的路径\n" );
-			exit( 1 );
+			exit( EXIT_FAILURE );
 		}
 		m_watch = lNode.getAttribute( "watch" );
 		m_watch = Initialize::SplitLastSlash( m_watch );
@@ -71,7 +67,7 @@ void CdnRefreshInterface::XmlParse(std::string config_file_name)
 		{
 
 			cout << "配置文件错误，一些xml属性不应为空，请检查" << endl;
-			exit( 1 );
+			exit( EXIT_FAILURE );
 		}
 		break;
 	}
@@ -94,10 +90,10 @@ int CdnRefreshInterface::Execute(Event e)
 
 	char buf[MAXDATASIZE] = "\0";//receive date from cdn
 	int sockfd, recvbytes, flags, n;
-	struct sockaddr_in serv_addr;
+	struct sockaddr_in serv_addr{};
 	struct hostent *host;
 
-	if ((host = gethostbyname(  m_domainName.c_str() )) == NULL)
+	if ((host = gethostbyname(  m_domainName.c_str() )) == nullptr)
 	{
 		printf( "get host by name error ccms.chinacache.com down" );
 		return 1;
@@ -174,7 +170,7 @@ int CdnRefreshInterface::Execute(Event e)
 
 }
 
-string CdnRefreshInterface::PackagePath(Event e)
+string CdnRefreshInterface::PackagePath(const Event& e)
 {
 	string temp;
 	char buf[1024] = "\0";
@@ -185,7 +181,7 @@ string CdnRefreshInterface::PackagePath(Event e)
 		boost::smatch what;
 		boost::regex expression( m_urlRegex );
 		int res = boost::regex_search( e->path, what, expression );
-		if (false == res || what.size( ) <= 0)
+		if (res == 0 || what.empty())
 		{
 			return temp;
 		}
@@ -212,7 +208,7 @@ string CdnRefreshInterface::PackagePath(Event e)
 	return temp;
 }
 
-void CdnRefreshInterface::ErrorLog(string temp,string fullPath)
+void CdnRefreshInterface::ErrorLog(string temp,const string& fullPath)
 {
 	static int iWriteTime = 0;
 	if (iWriteTime < 1000)
@@ -225,7 +221,7 @@ void CdnRefreshInterface::ErrorLog(string temp,string fullPath)
 		iWriteTime = 0;
 	}
 	int pos = 0;
-	if ((pos = (temp.find( "\n", temp.find( "whatsup" ) ))) != string::npos)
+	if ((pos = (temp.find( '\n', temp.find( "whatsup" ) ))) != string::npos)
 	{
 		int i = pos - 1 - temp.find( "whatsup" );
 		temp = temp.substr( temp.find( "whatsup" ), i );

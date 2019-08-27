@@ -4,11 +4,15 @@
 #include <curl/curl.h>
 #include <fcntl.h>
 #include <arpa/inet.h>
-#include "QueueFilter.h"
+#include <iostream>
 #include "Initialize.h"
 #include "xmlParser.h"
 #include "Inotify.h"
 #include "SocketInterface.h"
+
+using std::cout;
+using std::endl;
+
 
 SocketInterface::SocketInterface() : m_ip("127.0.0.1")
 {

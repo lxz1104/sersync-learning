@@ -1,8 +1,11 @@
-#include<curl/curl.h>
-#include<sstream>
+#include <curl/curl.h>
+#include <iostream>
 #include "xmlParser.h"
 #include "Inotify.h"
-#include"HttpInterface.h"
+#include "HttpInterface.h"
+
+using std::cout;
+using std::endl;
 
 HttpInterface::HttpInterface() : m_url("http://localhost")
 {

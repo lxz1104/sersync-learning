@@ -1,12 +1,11 @@
 #include <string>
-#include<iostream>
 #include <sys/inotify.h>
 #include <boost/shared_ptr.hpp>
 #include <boost/regex.hpp>
 #include <deque>
 #include <map>
 #include "Initialize.h"
-#include"QueueFilter.h"
+#include "QueueFilter.h"
 
 #ifndef _INOTIFY_H
 #define _INOTIFY_H
@@ -39,7 +38,7 @@ protected:
     static int m_first_add_watch;
     static int inotify_read_times;
 public:
-    Inotify(std::string rootPath); //add root path which want to watch
+    explicit Inotify(std::string rootPath); //add root path which want to watch
     bool AddWatch(std::string path);
     bool RemoveWatch(std::string path); //remove watch path
     unsigned int GetEvents(ptrQFilter que);
